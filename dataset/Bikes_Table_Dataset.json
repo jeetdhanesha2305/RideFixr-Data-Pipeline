@@ -1,0 +1,42 @@
+{
+	"name": "Bikes_Table_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RideFixr_SqlDb_LinkedService",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"sql_connection_url": "ride-fixr.database.windows.net",
+				"sql_connection_db_name": "ridefixr-sql-db"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ServiceCenterID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Region",
+				"type": "varchar"
+			},
+			{
+				"name": "Address",
+				"type": "varchar"
+			},
+			{
+				"name": "ManagerName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ServiceCenter"
+		}
+	}
+}
