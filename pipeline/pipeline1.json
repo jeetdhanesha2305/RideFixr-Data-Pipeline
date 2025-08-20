@@ -1,0 +1,24 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"parameters": {
+			"sql_connection_url": {
+				"type": "string",
+				"defaultValue": "ride-fixr.database.windows.net"
+			},
+			"sql_connection_db_name": {
+				"type": "string",
+				"defaultValue": "ridefixr-cosmos-db"
+			},
+			"sql_connection_username": {
+				"type": "string",
+				"defaultValue": "ridefixer.admin"
+			},
+			"sql_connection_password": {
+				"type": "string",
+				"defaultValue": "masalaDhosa@25"
+			}
+		},
+		"annotations": []
+	}
+}
