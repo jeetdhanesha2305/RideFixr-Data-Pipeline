@@ -1,0 +1,9 @@
+{
+	"name": "ridefixr-adf-dev",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "86b3647b-a874-4847-9f24-686d41b45c49",
+		"tenantId": "f15a351f-cede-40da-9e60-0378d22e317e"
+	}
+}
