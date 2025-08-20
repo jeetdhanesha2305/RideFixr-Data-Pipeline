@@ -1,0 +1,39 @@
+{
+	"name": "RideFixr_SqlDb_LinkedService",
+	"properties": {
+		"parameters": {
+			"sql_connection_url": {
+				"type": "String",
+				"defaultValue": "ride-fixr.database.windows.net"
+			},
+			"sql_connection_db_name": {
+				"type": "String",
+				"defaultValue": "ridefixr-sql-db"
+			},
+			"sql_connection_username": {
+				"type": "String"
+			},
+			"sql_connection_password": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "@{linkedService().sql_connection_url}",
+			"database": "@{linkedService().sql_connection_db_name}",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "@{linkedService().sql_connection_username}",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "RideFixr_KeyVault_LinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sql-db-password"
+			}
+		}
+	}
+}
