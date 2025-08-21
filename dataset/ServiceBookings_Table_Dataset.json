@@ -1,0 +1,16 @@
+{
+	"name": "ServiceBookings_Table_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RideFixr_SqlDb_LinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ServiceBookings"
+		}
+	}
+}
