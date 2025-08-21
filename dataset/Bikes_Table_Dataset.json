@@ -1,0 +1,44 @@
+{
+	"name": "Bikes_Table_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RideFixr_SqlDb_LinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BikeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CustomerID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Make",
+				"type": "varchar"
+			},
+			{
+				"name": "Model",
+				"type": "varchar"
+			},
+			{
+				"name": "Year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RegistrationNo",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Bikes"
+		}
+	}
+}
