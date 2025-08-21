@@ -1,0 +1,24 @@
+{
+	"name": "RideFixr_DataLake_LinkedService",
+	"properties": {
+		"parameters": {
+			"datalake_connection_url": {
+				"type": "String",
+				"defaultValue": "https://ridefixrdeltalake.dfs.core.windows.net/"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "@{linkedService().datalake_connection_url}",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "RideFixr_KeyVault_LinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "deltalake-connection-key"
+			}
+		}
+	}
+}
