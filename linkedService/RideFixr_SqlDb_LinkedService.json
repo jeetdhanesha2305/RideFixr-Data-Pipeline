@@ -11,10 +11,8 @@
 				"defaultValue": "ridefixr-sql-db"
 			},
 			"sql_connection_username": {
-				"type": "String"
-			},
-			"sql_connection_password": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "ridefixer.admin"
 			}
 		},
 		"annotations": [],
