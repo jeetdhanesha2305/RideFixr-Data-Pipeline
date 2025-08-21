@@ -221,7 +221,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT *\nFROM ServiceBookings\nWHERE ServiceScheduledTimestamp >= DATEADD(minute, -330,\n          CAST(DATEADD(day, -1, CONVERT(date, DATEADD(minute, 330, SYSUTCDATETIME()))) AS datetime2(0)))\n  AND ServiceScheduledTimestamp <  DATEADD(minute, -330,\n          CAST(CONVERT(date, DATEADD(minute, 330, SYSUTCDATETIME())) AS datetime2(0)));",
+							"value": "SELECT *\nFROM ServiceBookings\nWHERE BookingTimestamp >= DATEADD(minute, -330,\n          CAST(DATEADD(day, -1, CONVERT(date, DATEADD(minute, 330, SYSUTCDATETIME()))) AS datetime2(0)))\n  AND BookingTimestamp <  DATEADD(minute, -330,\n          CAST(CONVERT(date, DATEADD(minute, 330, SYSUTCDATETIME())) AS datetime2(0)));",
 							"type": "Expression"
 						},
 						"queryTimeout": "00:20:00",
