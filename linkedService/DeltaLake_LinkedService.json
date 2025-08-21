@@ -3,7 +3,8 @@
 	"properties": {
 		"parameters": {
 			"DeltaLake_Connection_Url": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "https://ridefixrdeltalake.dfs.core.windows.net/"
 			}
 		},
 		"annotations": [],
