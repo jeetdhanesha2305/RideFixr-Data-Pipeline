@@ -3,7 +3,10 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "RideFixr_DataLake_LinkedService",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"datalake_connection_url": "https://ridefixrdeltalake.dfs.core.windows.net/"
+			}
 		},
 		"annotations": [],
 		"type": "Parquet",
@@ -15,6 +18,31 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "BikeID",
+				"type": "INT32"
+			},
+			{
+				"name": "CustomerID",
+				"type": "INT32"
+			},
+			{
+				"name": "Make",
+				"type": "UTF8"
+			},
+			{
+				"name": "Model",
+				"type": "UTF8"
+			},
+			{
+				"name": "Year",
+				"type": "INT32"
+			},
+			{
+				"name": "RegistrationNo",
+				"type": "UTF8"
+			}
+		]
 	}
 }

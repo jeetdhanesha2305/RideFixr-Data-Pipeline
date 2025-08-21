@@ -1,0 +1,33 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Bikes_Ingestion_Dataset",
+						"type": "DatasetReference"
+					},
+					"name": "BikesIngestedData"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          BikeID as integer,",
+				"          CustomerID as integer,",
+				"          Make as string,",
+				"          Model as string,",
+				"          Year as integer,",
+				"          RegistrationNo as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> BikesIngestedData"
+			]
+		}
+	}
+}
