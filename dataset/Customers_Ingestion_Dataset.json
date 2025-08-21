@@ -1,0 +1,20 @@
+{
+	"name": "Customers_Ingestion_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RideFixr_DataLake_LinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "bronze_layer/Customers",
+				"fileSystem": "medallion-layer"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
