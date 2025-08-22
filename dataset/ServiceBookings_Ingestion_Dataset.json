@@ -3,14 +3,17 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "RideFixr_DataLake_LinkedService",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"datalake_connection_url": "https://ridefixrdeltalake.dfs.core.windows.net/"
+			}
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "bronze_layer/ServiceBookings",
+				"folderPath": "ingestion_layer/ServiceBookings",
 				"fileSystem": "medallion-layer"
 			},
 			"compressionCodec": "snappy"

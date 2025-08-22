@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "bronze_layer/Bikes",
+				"folderPath": "ingestion_layer/Bikes",
 				"fileSystem": "medallion-layer"
 			},
 			"compressionCodec": "snappy"
