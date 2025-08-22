@@ -1,0 +1,23 @@
+{
+	"name": "RideFixer_DataWarehouse_LinkedService",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"server": "ridefixr-synapse-dev.sql.azuresynapse.net",
+			"database": "RideFixrDataWarehouse",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "ridefixr_warehouse_user",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "RideFixr_KeyVault_LinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "datawarehouse-key"
+			}
+		}
+	}
+}
