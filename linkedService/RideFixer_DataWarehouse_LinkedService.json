@@ -4,12 +4,7 @@
 		"annotations": [],
 		"type": "AzureSqlDW",
 		"typeProperties": {
-			"server": "ridefixr-synapse-dev.sql.azuresynapse.net",
-			"database": "RideFixrDataWarehouse",
-			"encrypt": "mandatory",
-			"trustServerCertificate": false,
-			"authenticationType": "SQL",
-			"userName": "ridefixr_warehouse_user",
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=ridefixr-synapse-dev.sql.azuresynapse.net;Initial Catalog=RideFixrDataWarehouse;User ID=ridefixr_warehouse_user",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
