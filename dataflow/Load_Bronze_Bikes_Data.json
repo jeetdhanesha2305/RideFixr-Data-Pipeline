@@ -69,7 +69,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table',",
 				"     staged: true) ~> BikesSynapseWarehouse",
-				"JoinNewBikesAndWarehouseData alterRow(insertIf(isNull(toString(byName('BikesSynapseWarehouse@BikeID'))))) ~> AddOnlyNewBikes",
+				"JoinNewBikesAndWarehouseData alterRow(insertIf(isNull(BikesSynapseWarehouse@BikeID))) ~> AddOnlyNewBikes",
 				"SelectBikesRequiredColumn derive(raw_ingest_ts = currentTimestamp()) ~> DeriveCurrentTimestampColumn",
 				"BikesIngestedData, BikesSynapseWarehouse join(BikesIngestedData@BikeID == BikesSynapseWarehouse@BikeID,",
 				"     joinType:'left',",
