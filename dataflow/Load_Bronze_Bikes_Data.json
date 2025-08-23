@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "BikesIngestedData"
+				},
+				{
+					"dataset": {
+						"referenceName": "Bikes_BronzeLayer_Dataset",
+						"type": "DatasetReference"
+					},
+					"name": "BikesSynapseWarehouse"
 				}
 			],
 			"sinks": [
@@ -23,13 +30,13 @@
 			],
 			"transformations": [
 				{
-					"name": "SelectRequiredColumns"
+					"name": "AddOnlyNewBikes"
 				},
 				{
-					"name": "UpsertLogicForBikes"
+					"name": "DeriveCurrentTimestampColumn"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "JoinNewBikesAndWarehouseData"
 				}
 			],
 			"scriptLines": [
@@ -45,19 +52,28 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> BikesIngestedData",
-				"BikesIngestedData select(mapColumn(",
-				"          BikeID,",
-				"          CustomerID,",
-				"          Make,",
-				"          Model,",
-				"          Year,",
-				"          RegistrationNo",
+				"source(output(",
+				"          BikeID as integer,",
+				"          CustomerID as integer,",
+				"          Make as string,",
+				"          Model as string,",
+				"          Year as integer,",
+				"          RegistrationNo as string,",
+				"          raw_ingest_ts as timestamp",
 				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectRequiredColumns",
-				"SelectRequiredColumns alterRow(upsertIf(true())) ~> UpsertLogicForBikes",
-				"UpsertLogicForBikes derive(raw_ingest_ts = currentTimestamp()) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: false,",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table',",
+				"     staged: true) ~> BikesSynapseWarehouse",
+				"JoinNewBikesAndWarehouseData alterRow(insertIf(isNull(BikesSynapseWarehouse@BikeID))) ~> AddOnlyNewBikes",
+				"AddOnlyNewBikes derive(raw_ingest_ts = currentTimestamp()) ~> DeriveCurrentTimestampColumn",
+				"BikesIngestedData, BikesSynapseWarehouse join(BikesIngestedData@BikeID == BikesSynapseWarehouse@BikeID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinNewBikesAndWarehouseData",
+				"DeriveCurrentTimestampColumn sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
 				"          BikeID as integer,",
