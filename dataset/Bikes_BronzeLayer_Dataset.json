@@ -9,29 +9,31 @@
 		"type": "AzureSqlDWTable",
 		"schema": [
 			{
-				"name": "bike_id",
+				"name": "BikeID",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "bike_name",
+				"name": "CustomerID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Make",
 				"type": "nvarchar"
 			},
 			{
-				"name": "bike_type",
+				"name": "Model",
 				"type": "nvarchar"
 			},
 			{
-				"name": "purchase_date",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
+				"name": "Year",
+				"type": "int",
+				"precision": 10
 			},
 			{
-				"name": "cost_price",
-				"type": "decimal",
-				"precision": 10,
-				"scale": 2
+				"name": "RegistrationNo",
+				"type": "nvarchar"
 			},
 			{
 				"name": "raw_ingest_ts",

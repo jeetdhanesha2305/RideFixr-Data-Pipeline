@@ -27,6 +27,9 @@
 				},
 				{
 					"name": "UpsertLogicForBikes"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -53,28 +56,39 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectRequiredColumns",
 				"SelectRequiredColumns alterRow(upsertIf(true())) ~> UpsertLogicForBikes",
-				"UpsertLogicForBikes sink(allowSchemaDrift: false,",
+				"UpsertLogicForBikes derive(raw_ingest_ts = currentTimestamp()) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
-				"          bike_id as integer,",
-				"          bike_name as string,",
-				"          bike_type as string,",
-				"          purchase_date as timestamp,",
-				"          cost_price as decimal(10,2),",
+				"          BikeID as integer,",
+				"          CustomerID as integer,",
+				"          Make as string,",
+				"          Model as string,",
+				"          Year as integer,",
+				"          RegistrationNo as string,",
 				"          raw_ingest_ts as timestamp",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:false,",
 				"     updateable:false,",
 				"     upsertable:true,",
-				"     keys:['BikeID','CustomerID','Make','Model','Year','RegistrationNo'],",
+				"     keys:['BikeID'],",
 				"     skipKeyWrites:true,",
 				"     format: 'table',",
 				"     staged: true,",
 				"     allowCopyCommand: true,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> LoadBikesDataToSynapse"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          BikeID,",
+				"          CustomerID,",
+				"          Make,",
+				"          Model,",
+				"          Year,",
+				"          RegistrationNo,",
+				"          raw_ingest_ts",
+				"     )) ~> LoadBikesDataToSynapse"
 			]
 		}
 	}
