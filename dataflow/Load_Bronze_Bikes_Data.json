@@ -40,6 +40,9 @@
 				},
 				{
 					"name": "SelectBikesRequiredColumn"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -69,7 +72,7 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table',",
 				"     staged: true) ~> BikesSynapseWarehouse",
-				"JoinNewBikesAndWarehouseData alterRow(insertIf(isNull(BikesSynapseWarehouse@BikeID))) ~> AddOnlyNewBikes",
+				"filter1 alterRow(insertIf(isNull(toString(byName('BikesSynapseWarehouse@BikeID'))))) ~> AddOnlyNewBikes",
 				"SelectBikesRequiredColumn derive(raw_ingest_ts = currentTimestamp()) ~> DeriveCurrentTimestampColumn",
 				"BikesIngestedData, BikesSynapseWarehouse join(BikesIngestedData@BikeID == BikesSynapseWarehouse@BikeID,",
 				"     joinType:'left',",
@@ -86,6 +89,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectBikesRequiredColumn",
+				"JoinNewBikesAndWarehouseData filter(isNull(BikesSynapseWarehouse@BikeID)) ~> filter1",
 				"DeriveCurrentTimestampColumn sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
