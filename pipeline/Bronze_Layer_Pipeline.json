@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "Load_Bronze_Bikes_Data",
+						"referenceName": "Load_Bronze_Bikes_Data_copy1",
 						"type": "DataFlowReference"
 					},
 					"staging": {
