@@ -1,0 +1,48 @@
+{
+	"name": "Bikes_BronzeLayer_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RideFixer_DataWarehouse_LinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "bike_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "bike_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "bike_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "purchase_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "cost_price",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "raw_ingest_ts",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bronze_bikes"
+		}
+	}
+}

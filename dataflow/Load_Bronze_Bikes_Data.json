@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "Load_Bronze_Bikes_Data",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -12,8 +12,23 @@
 					"name": "BikesIngestedData"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Bikes_BronzeLayer_Dataset",
+						"type": "DatasetReference"
+					},
+					"name": "LoadBikesDataToSynapse"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectRequiredColumns"
+				},
+				{
+					"name": "UpsertLogicForBikes"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          BikeID as integer,",
@@ -26,7 +41,40 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet') ~> BikesIngestedData"
+				"     format: 'parquet') ~> BikesIngestedData",
+				"BikesIngestedData select(mapColumn(",
+				"          BikeID,",
+				"          CustomerID,",
+				"          Make,",
+				"          Model,",
+				"          Year,",
+				"          RegistrationNo",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectRequiredColumns",
+				"SelectRequiredColumns alterRow(upsertIf(true())) ~> UpsertLogicForBikes",
+				"UpsertLogicForBikes sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          bike_id as integer,",
+				"          bike_name as string,",
+				"          bike_type as string,",
+				"          purchase_date as timestamp,",
+				"          cost_price as decimal(10,2),",
+				"          raw_ingest_ts as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['BikeID','CustomerID','Make','Model','Year','RegistrationNo'],",
+				"     skipKeyWrites:true,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> LoadBikesDataToSynapse"
 			]
 		}
 	}
