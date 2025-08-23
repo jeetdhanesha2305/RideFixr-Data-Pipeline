@@ -55,7 +55,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectRequiredColumns",
-				"SelectRequiredColumns alterRow(insertIf(true())) ~> UpsertLogicForBikes",
+				"SelectRequiredColumns alterRow(upsertIf(true())) ~> UpsertLogicForBikes",
 				"UpsertLogicForBikes derive(raw_ingest_ts = currentTimestamp()) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
