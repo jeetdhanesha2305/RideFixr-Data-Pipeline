@@ -37,6 +37,9 @@
 				},
 				{
 					"name": "JoinNewBikesAndWarehouseData"
+				},
+				{
+					"name": "SelectBikesRequiredColumn"
 				}
 			],
 			"scriptLines": [
@@ -67,12 +70,23 @@
 				"     format: 'table',",
 				"     staged: true) ~> BikesSynapseWarehouse",
 				"JoinNewBikesAndWarehouseData alterRow(insertIf(isNull(BikesSynapseWarehouse@BikeID))) ~> AddOnlyNewBikes",
-				"AddOnlyNewBikes derive(raw_ingest_ts = currentTimestamp()) ~> DeriveCurrentTimestampColumn",
+				"SelectBikesRequiredColumn derive(raw_ingest_ts = currentTimestamp()) ~> DeriveCurrentTimestampColumn",
 				"BikesIngestedData, BikesSynapseWarehouse join(BikesIngestedData@BikeID == BikesSynapseWarehouse@BikeID,",
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> JoinNewBikesAndWarehouseData",
+				"AddOnlyNewBikes select(mapColumn(",
+				"          BikeID = BikesIngestedData@BikeID,",
+				"          CustomerID = BikesIngestedData@CustomerID,",
+				"          Make = BikesIngestedData@Make,",
+				"          Model = BikesIngestedData@Model,",
+				"          Year = BikesIngestedData@Year,",
+				"          RegistrationNo = BikesIngestedData@RegistrationNo,",
+				"          raw_ingest_ts",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectBikesRequiredColumn",
 				"DeriveCurrentTimestampColumn sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
